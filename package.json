@@ -1,0 +1,29 @@
+{
+	"name": "DecisionTreeJS",
+	"description": "A utility module providing asynchronous control flow similar to a flowchart",
+	"keywords": ["javascript", "control flow", "flowchart", "flow chart", "decision tree"],
+    "main": "./lib/decisiontree",
+	"author": "Pete Cleary",
+    "version": "0.1.0",
+    "repository" : {
+        "type" : "git",
+        "url" : "http://github.com/petecleary/decisiontreeJS.git"
+    },
+    "bugs" : {
+        "url" : "http://github.com/petecleary/decisiontreeJS/issues"
+    },
+    "licenses" : [
+        {
+            "type" : "MIT",
+            "url" : "http://github.com/petecleary/decisiontreeJS/raw/master/LICENSE"
+        }
+    ],
+    "jam": {
+        "main": "lib/decisiontree.js",
+        "include": [
+            "lib/decisiontree.js",
+            "README.md",
+            "LICENSE"
+        ]
+    }
+}

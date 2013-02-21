@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DecisionTreeJS - Examples Browser Simple</title>
+    <script src="../../lib/decisiontree.js"></script>
+    <script type="text/javascript">        
+
+        //add a log function to show on screen
+        log = function (msg) {
+            document.getElementById("results").innerHTML += msg + "<br />";
+        }
+
+        //create a data object to process
+        var data = { "a": 1 };
+
+        //create the root shape for the decision tree
+        var shape = {
+            "id": 1,
+            "shapeType": "Entry",
+            "description": "Start",
+            "nextShape": {
+                "id":2,
+                "shapeType": "Operation",
+                "description":"Adding value 1 to the data object",
+                "nextShape": null,
+                "properties": {"value": 1},
+                "process": function (data, shape, callback) {
+                    log("processing function called");
+                    log("data.a: " + data.a);
+                    log("adding shape.properties.value: " + shape.properties.value);
+                    data.a += Number(shape.properties.value);
+                    log("data.a: " + data.a);
+                    callback(null, shape);
+                }
+            }
+        }
+	
+        function runTest() {
+            //clear the results log
+            document.getElementById("results").innerHTML = "";
+            //execute the tree on the root shape
+            decisionTree.execute(shape, data, function (err, result, processedShapes) {
+                log("result: " + result.a);
+                for (var x = 0; x < processedShapes.length; x++) {
+                    log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>DecisionTreeJS - Examples Browser Simple</h1>
+    <input type="button" onclick="runTest();" value="Run Test" />
+    <h2>Results</h2>
+    <div id="results">
+    </div>
+    <hr/>
+    <p><a href="https://petecleary.github.com/decisiontreejsp">Decision Tree JS</a></p>
+    <p>&copy; 2013 Pete Cleary</p>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DecisionTreeJS - Examples Browser Simple</title>
+    <script src="../../lib/decisiontree.js"></script>
+    <script src="app.js"></script>
+    <script src="json.js"></script>
+    <script type="text/javascript">        
+
+        //add a log function to show on screen
+        TestApp.log = function (msg) {
+            document.getElementById("results").innerHTML += msg + "<br />";
+        }
+
+        //create a data object to process
+        var data = { "a": 1 };
+        	
+        function runTest() {
+            //clear the results log
+            document.getElementById("results").innerHTML = "";
+            //execute the tree on the root shape
+            decisionTree.execute(shape, data, TestApp.complete);
+
+        }
+    </script>
+</head>
+<body>
+    <h1>DecisionTreeJS - Examples Browser Basic Application</h1>
+    <input type="button" onclick="runTest();" value="Run Test" />
+    <h2>Results</h2>
+    <div id="results">
+    </div>
+    <hr/>
+    <p><a href="https://petecleary.github.com/decisiontreejsp">Decision Tree JS</a></p>
+    <p>&copy; 2013 Pete Cleary</p>
+</body>
+</html>
