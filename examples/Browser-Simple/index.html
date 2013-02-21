@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DecisionTreeJS - Examples Browser Simple</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Decision Tree is a untility module providing asynchronous control flow similar to a flowchart. It can be used within node.js and the browser.">
+    <meta name="author" content="Pete Cleary">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../../assets/css/site.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38592932-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</head>
+<body data-spy="scroll" data-target=".sidebar">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                    </span>
+                </button>
+                <a class="brand" href="../../index.html">DecisionTreeJS</a>
+                <div class="nav-collapse collapse">
+                    <ul id="topNav" class="nav">
+                    </ul>
+                    <p class="navbar-text pull-right">
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=node.js-basic-stack&type=watch&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=decisiontreejs&type=fork&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="headSpace">
+    </div>
+    <div class="container">
+        <!-- Docs nav
+    ================================================== -->
+        <div class="row">
+            <div class="span3 sidebar">
+                <ul class="nav nav-list affix">
+                    <li><a href="#"><i class="icon-chevron-right"></i>Browser Examples</a>
+                        <ul id="exampleNavBrowser" class="nav nav-list">
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="icon-chevron-right"></i>Node.js Examples</a>
+                        <ul id="exampleNavNode" class="nav nav-list">
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="span9">
+                <section id="Examples">
+                <h1>
+                    Simple <em><small>[Browser]</small></em></h1>
+    <p>This is a simple browser based example that shows how to execute a basic tree to add a value to an object.</p>
+    
+    <script src="../../assets/decisiontree.min.js"></script>
+    <script type="text/javascript">        
+
+        //add a log function to show on screen
+        log = function (msg) {
+            document.getElementById("results").innerHTML += msg + "<br />";
+        }
+
+        //create a data object to process
+        var data = { "a": 1 };
+
+        //create the root shape for the decision tree
+        var shape = {
+            "id": 1,
+            "shapeType": "Entry",
+            "description": "Start",
+            "nextShape": {
+                "id":2,
+                "shapeType": "Operation",
+                "description":"Adding value 1 to the data object",
+                "nextShape": null,
+                "properties": {"value": 1},
+                "process": function (data, shape, callback) {
+                    log("processing function called");
+                    log("data.a: " + data.a);
+                    log("adding shape.properties.value: " + shape.properties.value);
+                    data.a += Number(shape.properties.value);
+                    log("data.a: " + data.a);
+                    callback(null, shape);
+                }
+            }
+        }
+	
+        function runTest() {
+            //clear the results log
+            document.getElementById("results").innerHTML = "";
+            //show tab
+            $('#myTab a[href="#resultsTab"]').tab('show');
+            //execute the tree on the root shape
+            decisionTree.execute(shape, data, function (err, result, processedShapes) {
+                log("result: " + result.a);
+                for (var x = 0; x < processedShapes.length; x++) {
+                    log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
+                }
+            });
+        }
+    </script>
+<p>
+                <input type="button" class="btn btn-primary" onclick="runTest();" value="Run Test" />
+                <a class="btn btn-success" href="../Browser-Simple.zip" target="_blank" onclick="_gaq.push(['_trackEvent', 'Example actions', 'Example links', 'Browser-Simple']);">
+                    Download &raquo;</a>
+                        </p>
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
+              <li><a href="#pageCode" data-toggle="tab">Page Code</a></li>
+              <li><a href="#resultsTab" data-toggle="tab">Test Results</a></li>
+              </li>
+            </ul> 
+            <div id="myTabContent" class="tab-content">
+                <div id="overview" class="tab-pane fade in active">
+                    <h3>Log Function</h3>
+                <p>We start by adding a log function so that we can review the results and what is being processed</p>                   
+    <pre><code>//add a log function to show on screen
+        log = function (msg) {
+            document.getElementById("results").innerHTML += msg + "<br />";
+        }</code></pre>
+                    
+                    <h3>Object to Process</h3>
+                <p>We create a new object to process. This object is passed to the decision tree and is altered by the functions in the tree.
+                <p>Any functions processing the object should be aware of it's structure or handle incorrect objects by throwing an error. </p>                   
+    <pre><code>//create a data object to process
+        var data = { "a": 1 };</code></pre>
+
+                    <h3>Root Shape</h3>
+                    <p>Every decision tree requires a root shape to start processing at.  
+                        In this example we are creating the initial entry shape (description Start) and adding the next shape as an Operation Shape.</p>
+                    <p>The Operation Shape has a property of <code>{"value": 1}</code></p>
+                    <p>It has a process function which calls the log to write what is happening, it then adds the value property to the processing objects a property <code>data.a += Number(shape.properties.value)</code>.</p>
+                <pre><code class="lang-javascript">//create the root shape for the decision tree
+        var shape = {
+            "id": 1,
+            "shapeType": "Entry",
+            "description": "Start",
+            "nextShape": {
+                "id":2,
+                "shapeType": "Operation",
+                "description":"Adding value 1 to the data object",
+                "nextShape": null,
+                "properties": {"value": 1},
+                "process": function (data, shape, callback) {
+                    log("processing function called");
+                    log("data.a: " + data.a);
+                    log("adding shape.properties.value: " + shape.properties.value);
+                    data.a += Number(shape.properties.value);
+                    log("data.a: " + data.a);
+                    callback(null, shape);
+                }
+            }
+        }
+                    </code></pre>
+
+                    <h3>Run Test</h3>
+                <p>The runTest() function calls the <code>decisionTree.execute</code> function passing in the root shape, the data object to process and sets a callback function to be called on complete.</p>                   
+                    <p>The complete callback function displays the new value of the resulting data object and then loops through the processedShapes object to display which shapes were processed in which order.</p>
+    <pre><code>
+        function runTest() {
+            //clear the results log
+            document.getElementById("results").innerHTML = "";
+            //execute the tree on the root shape
+            decisionTree.execute(shape, data, function (err, result, processedShapes) {
+                log("result: " + result.a);
+                for (var x = 0; x < processedShapes.length; x++) {
+                    log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
+                }
+            });
+        }</code></pre>
+                </div>
+              <div class="tab-pane fade" id="pageCode">
+                <pre><code class="lang-javascript">
+    &lt;script src="decisiontree.min.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript"&gt;       
+
+        //add a log function to show on screen
+        log = function (msg) {
+            document.getElementById("results").innerHTML += msg + "<br />";
+        }
+
+        //create a data object to process
+        var data = { "a": 1 };
+
+        //create the root shape for the decision tree
+        var shape = {
+            "id": 1,
+            "shapeType": "Entry",
+            "description": "Start",
+            "nextShape": {
+                "id":2,
+                "shapeType": "Operation",
+                "description":"Adding value 1 to the data object",
+                "nextShape": null,
+                "properties": {"value": 1},
+                "process": function (data, shape, callback) {
+                    log("processing function called");
+                    log("data.a: " + data.a);
+                    log("adding shape.properties.value: " + shape.properties.value);
+                    data.a += Number(shape.properties.value);
+                    log("data.a: " + data.a);
+                    callback(null, shape);
+                }
+            }
+        }
+	
+        function runTest() {
+            //clear the results log
+            document.getElementById("results").innerHTML = "";
+            //execute the tree on the root shape
+            decisionTree.execute(shape, data, function (err, result, processedShapes) {
+                log("result: " + result.a);
+                for (var x = 0; x < processedShapes.length; x++) {
+                    log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
+                }
+            });
+        }
+    &lt;/script&gt;
+    &lt;input type="button" class="btn btn-primary" onclick="runTest();" value="Run Test" /&gt;
+    &lt;h2&gt;Results&lt;/h2&gt;
+    &lt;div id="results"&gt;&lt;/div&gt;
+                    </code>
+                </pre>
+                  </div>
+                <div class="tab-pane fade"  id="resultsTab">
+                <div id="results" class="well">
+                    <p>You haven't run the test yet!</p>
+                    <p><input type="button" class="btn btn-primary" onclick="runTest();" value="Run Test" /></p>
+                </div>
+                </div>
+            </div>
+                </section>
+            </div>
+        </div>
+        <footer class="well">
+        <ul class="footer-links">
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejsp" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'GitHub project']);">GitHub project</a>
+          </li>
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejs/zipball/master" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'Download .zip']);">Download .zip</a>
+          </li>
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejs/tarball/maste" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'Download .tar.gz']);">Download .tar.gz</a>
+          </li>
+        </ul>
+        <ul class="footer-links">
+            <li>&copy; 2013 Pete Cleary</li>
+        </ul>
+      </footer>
+    </div>
+    <script src="../../assets/js/jquery.js"></script>
+    <script src="../../assets/js/navigation.js"></script>
+    <script src="../../assets/js/application.js"></script>
+    <script src="../../assets/js/bootstrap-transition.js"></script>
+    <script src="../../assets/js/bootstrap-collapse.js"></script>
+    <script src="../../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../../assets/js/bootstrap-tab.js"></script>
+    <script type="text/javascript">
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    </script>
+</body>
+</html>

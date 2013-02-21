@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DecisionTreeJS - Getting Started</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Decision Tree is a untility module providing asynchronous control flow similar to a flowchart. It can be used within node.js and the browser.">
+    <meta name="author" content="Pete Cleary">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/site.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38592932-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</head>
+<body data-spy="scroll" data-target=".sidebar">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                    </span>
+                </button>
+                <a class="brand" href="index.html">DecisionTreeJS</a>
+                <div class="nav-collapse collapse">
+                    <ul id="topNav" class="nav">
+                    </ul>
+                    <p class="navbar-text pull-right">
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=node.js-basic-stack&type=watch&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=decisiontreejs&type=fork&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="headSpace">
+    </div>
+    <div class="container">
+        <!-- Docs nav
+    ================================================== -->
+        <div class="row">
+            <div class="span3 sidebar">
+                <ul class="nav nav-list affix">
+                    <li><a href="#Started"><i class="icon-chevron-right"></i>Get Started</a></li>
+                    <li><a href="#QuickExample"><i class="icon-chevron-right"></i>Quick Example</a></li>
+                    <li><a href="#Node"><i class="icon-chevron-right"></i>In Node.js</a></li>
+                    <li><a href="#Browser"><i class="icon-chevron-right"></i>In a browser</a></li>
+                </ul>
+            </div>
+            <div class="span9">
+                <section id="Started">
+                <h1>
+                    Get Started</h1>
+                <p class="lead">
+                    Decision Tree gives you more control over the path your code takes to process an object.
+                </p>
+                    <p>There are some great linear flow control systems available, giving you asynchronous or parallel flow control.  <a href="https://github.com/caolan/async" target="_blank">Async</a> is one of the best.</p>                    
+                    <p>However all offer linear processing with no decision making capabilities baked in.</p>
+                    <p>Decision Tree is built to give you flow control based on flow chart priniciples.</p>
+                    <p>By matching the common shapes in a flow chart the Decision Tree lets your code follow the rules based on the Operations and Decisions made in real time so each object you process can take a different path through the tree as required.</p>
+                     
+                </sction>
+                    <section id="QuickExample">
+                <h1 class="pagePoint">
+                    Quick Example</h1>
+                <p>
+                   In the example below the flow will call the entry shape followed by an operation shape.  
+                    The operation shape will add the value 2 to the data.a value.
+                </p>
+                <pre><code class="lang-javascript">//create a data object to process
+	var data = { "a": 1 };
+
+	//create the root shape for the decision tree
+	var shape = {
+		"id": 1,
+		"shapeType": "Entry",
+		"description": "Start",
+		"nextShape": {
+			"id":2,
+			"shapeType": "Operation",
+			"description":"Adding value 2 to the data object",
+			"nextShape": null,
+			"properties": {"value": 2},
+			"process": function (data, shape, callback) {
+				data.a += Number(shape.properties.value);
+				callback(null, shape);
+			}
+		}
+	}
+	
+	//execute the tree on the root shape
+    decisionTree.execute(shape, data, function(err, result, processedShapes){
+        console.log("result: " + result.a);
+        for (var x = 0; x < processedShapes.length; x++) {
+            console.log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
+        }
+    });
+</code></pre>
+                </sction>
+                    <section id="Node">
+                <h1 class="pagePoint">
+                    Working in Node.js</h1>
+                <p>
+                    Running in Node.js is easy, simply include the library and then execute the tree.
+                </p>
+                <pre><code class="lang-javascript">
+var decisionTree = require("decisionTree.min.js");
+var TestApp = require("app.js");
+var tree = require("json.js");
+
+//create a data object to process
+var data = { "a": 1 };
+
+//execute the tree on the root shape
+decisionTree.execute(tree.shape, data, TestApp.complete, { "TestApp": TestApp });
+</code></pre>
+                        <p>Review the <a href="examples/Node-BasicApp/index.html">examples</a> to see more for Node.js.</p>
+                    </section>
+                    <section id="Browser">
+                <h1 class="pagePoint">
+                    Working in a browser</h1>
+                <p>
+                    The decision tree works within the browser with the same syntax as the Node.js example.  
+                    If you want you can make the execute call simpler by omitting any app libraries.
+                </p>
+                <pre><code class="lang-javascript">
+&lt;script type="text/javascript" src="decisiontree.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+
+    decisionTree.execute(shape, data, function(err, result, processedShapes){
+        console.log("result: " + result.a);
+        for (var x = 0; x < processedShapes.length; x++) {
+            console.log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
+        }
+    });
+
+&lt;/script&gt;
+</code></pre>
+                        <p>Review the <a href="examples/Browser-Simple/index.html">examples</a> to see more for browsers.</p>
+                        <p>So far its been tested in IE8, IE9, FF18 and Chrome 24</p>
+                    </section>
+
+            </div>
+        </div>
+        <footer class="well">
+        <ul class="footer-links">
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejsp" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'GitHub project']);">GitHub project</a>
+          </li>
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejs/zipball/master" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'Download .zip']);">Download .zip</a>
+          </li>
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejs/tarball/maste" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'Download .tar.gz']);">Download .tar.gz</a>
+          </li>
+        </ul>
+        <ul class="footer-links">
+            <li>&copy; 2013 Pete Cleary</li>
+        </ul>
+      </footer>
+    </div>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DecisionTreeJS - Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Decision Tree is a untility module providing asynchronous control flow similar to a flowchart. It can be used within node.js and the browser.">
+    <meta name="author" content="Pete Cleary">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/site.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38592932-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</head>
+<body data-spy="scroll" data-target=".sidebar">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                    </span>
+                </button>
+                <a class="brand" href="./index.html">DecisionTreeJS</a>
+                <div class="nav-collapse collapse">
+                    <ul id="topNav" class="nav">
+                    </ul>
+                    <p class="navbar-text pull-right">
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=node.js-basic-stack&type=watch&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=decisiontreejs&type=fork&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="headSpace">
+    </div>
+    <div class="container">
+        <!-- Docs nav
+    ================================================== -->
+        <div class="row">
+            <div class="span3 sidebar">
+                <ul class="nav nav-list affix">
+                    <li><a href="#Shapes"><i class="icon-chevron-right"></i>Shapes</a>
+                        <ul class="nav nav-list">
+                            <li><a href="#EntryShape"><i class="icon-chevron-right"></i>Entry Shape</a></li>
+                            <li><a href="#TerminatorShape"><i class="icon-chevron-right"></i>Terminator Shape</a></li>
+                            <li><a href="#OperationShape"><i class="icon-chevron-right"></i>Operation Shape</a></li>
+                            <li><a href="#DecisionShape"><i class="icon-chevron-right"></i>Decision Shape</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#DecisionPaths"><i class="icon-chevron-right"></i>Decision Paths</a>
+                    </li>
+                    <li><a href="#ExecuteFunction"><i class="icon-chevron-right"></i>Execute Function</a>
+                        <ul class="nav nav-list">
+                            <li><a href="#ExecuteNode"><i class="icon-chevron-right"></i>Use within Node.js</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#CallbackFunction"><i class="icon-chevron-right"></i>Callback Functions</a>
+                        <ul class="nav nav-list">
+                            <li><a href="#ApplicationFunctions"><i class="icon-chevron-right"></i>Application Functions</a></li>
+                            <li><a href="#CompleteFunction"><i class="icon-chevron-right"></i>Complete Function</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="span9">
+                <section id="Shapes">
+                <h1>
+                    Shapes</h1>
+                <p>
+                    The library uses standard flowchart shapes to define the requirement of each control
+                    step.
+                </p>
+                <p>
+                    There are currently 4 Shape types: </p> 
+                <ul>
+                    <li><a href="#EntryShape">Entry Shape</a></li>
+                    <li><a href="#TerminatorShape">Terminator Shape</a></li> 
+                    <li><a href="#OperationShape">Operation Shape</a> </li>
+                    <li><a href="#DecisionShape">Decision Shape</a></li>
+                </ul>
+               
+                <p>
+                    All the shapes inherit from the base IShape interface and contain the default properties
+                    to manage a shape.
+                </p>
+<pre><code>//shape with required properties
+var shape = { 
+		"id": "abc123",  
+		"shapeType": "Shape"
+	};
+	
+// shape with all properties
+var shape = { 
+		"id": "abc123",  
+		"shapeType": "Shape", 
+		"description": "Description of the shape",
+		"log": [],
+		"processed": false,
+		"processCount": 0
+	};
+</code></pre>
+                <p>
+                    The id field of a shape should be unique to the tree it resides in as the <a href="#ExecuteFunction">
+                        execute function</a> will find the first matching id when using a decisionPath
+                    that references an id.
+                </p>
+                <p>
+                    The shapeType property is used by the <a href="#ExecuteFunction">execute function</a> to
+                    determine the current shape this should not be altered at any time.
+                </p>
+
+                <h2 id="EntryShape" class="pagePoint">
+                    Entry Shape</h2>
+                <p>
+                    This shape tells you where the flowchart begins. It can also be added later at any
+                    point providing you with the subsequent entry points for your flowchart.
+                </p>
+                <p>
+                    The nextShape property contains a child shape that is to be called following the
+                    completion of the entry step.
+                </p>
+                <pre><code class="lang-javascript">var entry = { 
+		"id": 1,  
+		"shapeType": "Entry", 
+		"description": "Start",
+		"nextShape": null
+	};</code></pre>
+
+                <h2 id="TerminatorShape" class="pagePoint">
+                    Terminator Shape</h2>
+                <p>
+                    This shape tells you where the flowchart ends.
+                </p>
+                <pre><code class="lang-javascript">var terminator = { 
+		"id": 1,  
+		"shapeType": "Terminator", 
+		"description": "End"
+	};
+</code></pre>
+
+                <h2 id="OperationShape" class="pagePoint">
+                    Operation Shape</h2>
+                <p>
+                    This shape is used to manage an action that is to be taken.
+                </p>
+                <p>
+                    The shape either contains a process function or a processName value that is use
+                    to attach a function to the step by name. When the decision tree reaches this shape
+                    it will call the process function, once completed it will then move to the next
+                    shape.
+                </p>
+                <p>
+                    If the processName is populated then the function will be assigned even if one is
+                    already present.
+                </p>
+                <p>
+                    The nextShape property contains a child shape that is to be called following the
+                    completion of the operation step.
+                </p>
+                <pre><code class="lang-javascript">var operation = { 
+		"id": 1,  
+		"shapeType": "Operation", 
+		"description": "Call my process name function",
+		"nextShape": null,
+		"processName": "DecisionTreeTest.add",
+		"process": function(data, shape, callback){...},
+		"properties": {value: 2}
+	};
+</code></pre>
+
+                <h2 id="DecisionShape" class="pagePoint">
+                    Decision Shape</h2>
+                <p>
+                    A decision asks a question, the answer of which determines which route to follow.
+                </p>
+                <p>
+                    The shape inherits the operation shape and therefore a process is run first. As
+                    with the <a href="#OperationShape">Operation Shape</a>, if the processName is populated
+                    then the function will be assigned even if one is already present.
+                </p>
+                <p>
+                    The shape either contains a decide function or a decideName value that is use to
+                    attach a function to the step by name. It is the responsibility of the decide function
+                    to determine the next shape to be called.
+                </p>
+                <p>
+                    Each decision shape contains an array of <a href="#DecisionPaths">DecisionPaths</a>
+                    which are used to hold the paths that a decision can take. The decide function can
+                    either set a decisionPath selected property to true or manually set the nextShape
+                    property from the selected decisionPath.
+                </p>
+                <p>
+                    The nextShape property contains a child shape that is to be called following the
+                    completion of the operation step.
+                </p>
+                <pre><code class="lang-javascript">var decision = { 
+		"id": 1,  
+		"shapeType": "Decision", 
+		"description": "Call my process name function",
+		"nextShape": null,
+		"processName": "DecisionTreeTest.add",
+		"process": function(data, shape, callback){...},
+		"decidesName": "DecisionTreeTest.checkValue",
+		"decide": function(data, shape, callback){...},
+		"properties": {value: 2, decision: 10},
+		"paths": []
+	};</code></pre>
+                </sction>
+                    <section id="DecisionPaths">
+                <h1 class="pagePoint">
+                    Decision Paths</h1>
+                <p>
+                    A Decision Path works in a similar way to a flowchart arrow that follows a decision.
+                    It contains all the relevant data to determine which path the decision tree should
+                    take next.
+                </p>
+                <p>
+                    The path contains: <em>a value that is used by the decide function to determine if the
+                        path should be taken (similar to a label on a flowchart) </em>a selected value
+                    to assist the execute function to set the nextShape. <em>it can optionally have the
+                        nextShape object defined as a child </em>or the id of the the next shape to
+                    jump to in the flow
+                </p>
+                <pre><code class="lang-javascript">var path = { 
+		"value": true,
+		"selected": false,
+		"nextShape": null,
+		"nextShapeId": "abc123"
+	};
+</code></pre>
+                </sction>
+                    <section id="ExecuteFunction">
+                <h1 class="pagePoint">
+                    Execute Function</h1>
+                <p>
+                    The execute function provides the structure and manages the steps taken in a decision
+                    tree leaving the functions required to process and decide a route to your application.
+                </p>
+                <p>
+                    To call the function you must pass in the root shape and the data object to process.
+                </p>
+                <p>
+                    In addition it is recommended that you assign a callback function to be called when
+                    the process is complete or if an error occurs.
+                </p>
+                <p>
+                    If any functions in the shapes pass an error to its callback, no more functions
+                    are run and the complete callback is immediately called with the value of the error.
+                </p>
+                <p>
+                    You also have the option to not keep a list of processed shapes, it is recommended
+                    to turn this off for decision trees that are large or have multiple repeated steps.
+                </p>
+                <pre><code class="lang-javascript">//execute the tree on the root shape
+    decisionTree.execute(shape, data, function(err, result, processedShapes){
+        console.log("result: " + result.a);
+        for (var x = 0; x < processedShapes.length; x++) {
+            console.log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
+        }
+    }, true);
+</code></pre>
+                <h2 id="ExecuteNode" class="pagePoint">
+                    Use within Node.js</h2>
+                <p>
+                    If your shapes are defining the process and decision functions by name then you
+                    must send through the modules that contain the functions for the exectute function
+                    to set the targets.
+                </p>
+                <p>
+                    This takes the format of <code>{ "NAME", var }</code>
+                </p>
+                <p>
+                    In the example below there are two applications that have the required functions
+                    in, app1 and app2.
+                </p>
+                <p>
+                    For example:
+                </p>
+                <pre><code class="lang-javascript">var app1 = require("./app1.js");
+var app2 = require("./app2.js");
+
+//execute the tree on the root shape
+decisionTree.execute(shape, data, app1.complete, { "app1": app1, "app2": app2 });
+</code></pre>
+                
+                </sction>
+                    <section id="CallbackFunction">
+                <h1 class="pagePoint">
+                    Callback Functions</h1>
+                <p>
+                    There are two types of callback functions used: </p>
+                    <ul><li><a href="#AppFunction">Application
+                        Functions</a> </li><li><a href="#CompleteFunction">Complete Function</a></li></ul>
+                </p>
+                <h2 id="ApplicationFunctions" class="pagePoint">
+                    Application Functions</h2>
+                <p>
+                    All of the operation and decision functions are called by the <a href="#ExecuteFunction">Execute</a>
+                    function with the same signature. <em>data - the object being processed </em>shape
+                    - the current shape that is processing the object * callback - a function that calls
+                    back the execute function
+                </p>
+                <p>
+                    On completion the function must call the callback function passing: <em>null or error
+                    </em>shape - the current shape
+                </p>
+                <pre><code class="lang-javascript">function add(data, shape, callback) {
+		try {
+			var v = Number(shape.properties.value);
+			if(isNaN(v)) {
+				throw new Error("'" + v + "' is not a number");
+			}
+			data.a += v;
+			callback(null, shape);
+		} catch (e) {
+			callback(e, shape);
+		}
+	} 
+	</code></pre>
+                <h2 id="CompleteFunction" class="pagePoint">
+                    Complete Function</h2>
+                <p>
+                    When the <a href="#ExecuteFunction">Execute</a> function has completed if a callback function
+                    has been passed then it will be called. The callback function is also called immediately
+                    if an error is thrown.
+                </p>
+                <ul>
+                    <li>err - an error if one occurred or null if succesful</li>
+                    <li>result - the resulting objecting from processing</li>
+                    <li>processedShapes - an array of all the shapes processed by the <a href="#ExecuteFunction">
+                        Execute</a> function</li>
+                </ul>
+                <pre><code class="lang-javascript">function complete(err, result, processedShapes) {
+        ....
+    } 
+	</code></pre>
+                    </section>
+            </div>
+        </div>
+        <footer class="well">
+        <ul class="footer-links">
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejsp" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'GitHub project']);">GitHub project</a>
+          </li>
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejs/zipball/master" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'Download .zip']);">Download .zip</a>
+          </li>
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejs/tarball/maste" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'Download .tar.gz']);">Download .tar.gz</a>
+          </li>
+        </ul>
+        <ul class="footer-links">
+            <li>&copy; 2013 Pete Cleary</li>
+        </ul>
+      </footer>
+    </div>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/application.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>DecisionTreeJS</title>
+    <title>DecisionTreeJS - Download</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Decision Tree is a untility module providing asynchronous control flow similar to a flowchart. It can be used within node.js and the browser.">
     <meta name="author" content="Pete Cleary">
@@ -31,7 +31,7 @@
         })();
     </script>
 </head>
-<body>
+<body data-spy="scroll" data-target=".sidebar">
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
@@ -55,25 +55,34 @@
             </div>
         </div>
     </div>
+    <div class="headSpace">
+    </div>
     <div class="container">
-        <div class="jumbotron">
-            <div class="container">
+        <!-- Docs nav
+    ================================================== -->
+        <div class="row">
+            <div class="span6">
+                <section id="Full">
                 <h1>
-                    Decision Tree JS</h1>
-                <p class="lead">Get more control over the path your code takes to process an object.</p>
-                <p>
-                    <a class="btn btn-large btn-success" href="assets/decisiontree.zip" target="_blank" onclick="_gaq.push(['_trackEvent', 'Homepage actions', 'Homepage links', 'Download v0.1.0']);">
-                        Download &raquo;</a>
+                    Full Version</h1>
+                <p class="lead">
+                    The full version contains classes and constructors for the current available shapes.
                 </p>
-                <p>
-                    Decision Tree is a utility module providing asynchronous control flow similar
-                    to a flowchart.
-                </p>
-                
-                <p><small>
-                    Use within <a href="http://www.nodejs.org" target="_blank" onclick="_gaq.push(['_trackEvent', 'Homepage actions', 'Homepage links', 'Node JS']);">
-                        Node.js</a> and the browser.</small>
-                </p>
+                        <p>Use this version when you want to create shape constructors via your code.</p>
+                      <p><a class="btn btn-large" href="assets/decisiontree-full.zip" onclick="_gaq.push(['_trackEvent', 'Download', 'Download', 'Full v0.1.0']);">Standard (16kb)</a>
+                      <a class="btn btn-large" href="assets/decisiontree-full.min.zip" onclick="_gaq.push(['_trackEvent', 'Download', 'Download', 'Full Min v0.1.0']);">Minimized (5kb)</a></p>                      
+                </sction>
+            </div>
+            <div class="span6">
+                <section id="Slim">
+                <h1>
+                    Slim Version</h1>
+                <p class="lead">The slim version ONLY contains the execute function and is used just to processed pre built shapes.</p>
+                        <p>If you want to create shapes in your code use the full version.</p>
+                      <p><a class="btn btn-large" href="assets/decisiontree.zip" onclick="_gaq.push(['_trackEvent', 'Download', 'Download', 'Slim v0.1.0']);">Standard (12kb)</a>
+                    <a class="btn btn-large btn-success" href="assets/decisiontree.min.zip" onclick="_gaq.push(['_trackEvent', 'Download', 'Download', 'Slim Min v0.1.0']);">Minimized (3kb)</a></p>
+                    
+                </sction>
             </div>
         </div>
         <footer class="well">
@@ -98,5 +107,6 @@
     <script src="assets/js/application.js"></script>
     <script src="assets/js/bootstrap-transition.js"></script>
     <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
 </body>
 </html>
