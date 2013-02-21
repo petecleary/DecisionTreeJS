@@ -1,8 +1,8 @@
-# [DecisionTreeJS](petecleary.github.com/decisiontreejs)
+# [DecisionTreeJS](http://petecleary.github.com/DecisionTreeJS/)
 
 Decision Tree is a utility module providing asynchronous control flow similar to a flowchart.
 
-For full details, documentation and examples go to [petecleary.github.com/decisiontreejs](petecleary.github.com/decisiontreejs)
+For full details, documentation and examples go to [http://petecleary.github.com/DecisionTreeJS/](http://petecleary.github.com/DecisionTreeJS/)
 
 ## Get more control over the path your code takes to process an object.
 
