@@ -7,10 +7,10 @@ var navigation = {
         {text: "Download", href: "download.html"}
     ],
     examplesBrowser: [
-        {text: "Simple", href: "examples/browser-Simple/index.html"},
-        {text: "Basic Application", href: "examples/browser-BasicApp/index.html"}
+        {text: "Simple", href: "examples/browser-simple/index.html"},
+        {text: "Basic Application", href: "examples/browser-basicapp/index.html"}
     ],
     examplesNode: [
-        {text: "Basic Application", href: "examples/node-BasicApp/index.html"}
+        {text: "Basic Application", href: "examples/node-basicapp/index.html"}
     ]
 };
