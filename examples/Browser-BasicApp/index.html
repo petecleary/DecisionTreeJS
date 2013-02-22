@@ -98,6 +98,8 @@
             document.getElementById("results").innerHTML = "";
             //show tab
             $('#myTab a[href="#resultsTab"]').tab('show');
+            //set start date on the object
+            data.startDate = new Date();
             //execute the tree on the root shape
             decisionTree.execute(shape, data, TestApp.complete);
 

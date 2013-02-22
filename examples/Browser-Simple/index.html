@@ -80,7 +80,7 @@
     <p>This is a simple browser based example that shows how to execute a basic tree to add a value to an object.</p>
     
     <script src="../../assets/decisiontree.min.js"></script>
-    <script type="text/javascript">        
+    <script type="text/javascript">
 
         //add a log function to show on screen
         log = function (msg) {
@@ -96,11 +96,11 @@
             "shapeType": "Entry",
             "description": "Start",
             "nextShape": {
-                "id":2,
+                "id": 2,
                 "shapeType": "Operation",
-                "description":"Adding value 1 to the data object",
+                "description": "Adding value 1 to the data object",
                 "nextShape": null,
-                "properties": {"value": 1},
+                "properties": { "value": 1 },
                 "process": function (data, shape, callback) {
                     log("processing function called");
                     log("data.a: " + data.a);
@@ -111,18 +111,22 @@
                 }
             }
         }
-	
+
         function runTest() {
             //clear the results log
             document.getElementById("results").innerHTML = "";
             //show tab
             $('#myTab a[href="#resultsTab"]').tab('show');
+            //set start date on the object
+            data.startDate = new Date();
             //execute the tree on the root shape
             decisionTree.execute(shape, data, function (err, result, processedShapes) {
+                data.startDate = new Date();
                 log("result: " + result.a);
                 for (var x = 0; x < processedShapes.length; x++) {
                     log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
                 }
+                log("processing time: " + (new Date() - result.startDate) + " milliseconds");
             });
         }
     </script>

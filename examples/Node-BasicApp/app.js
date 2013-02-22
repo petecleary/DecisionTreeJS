@@ -54,7 +54,7 @@ var TestApp = exports;
             TestApp.log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
         }
         TestApp.log("Processed shapes JSON");
-        //TestApp.log(JSON.stringify(processedShapes));
+        TestApp.log("processing time: " + (new Date() - result.startDate) + " milliseconds");
     }
     TestApp.complete = complete;
 })(TestApp || (TestApp = {}));

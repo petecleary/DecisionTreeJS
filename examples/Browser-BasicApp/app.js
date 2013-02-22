@@ -53,6 +53,7 @@ var TestApp;
         for(var x = 0; x < processedShapes.length; x++) {
             TestApp.log("processed Shape: " + processedShapes[x].description + " id:" + processedShapes[x].id);
         }
+        TestApp.log("processing time: " + (new Date() - result.startDate) + " milliseconds");
     }
     TestApp.complete = complete;
 })(TestApp || (TestApp = {}));
