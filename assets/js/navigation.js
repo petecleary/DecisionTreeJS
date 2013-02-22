@@ -8,7 +8,8 @@ var navigation = {
     ],
     examplesBrowser: [
         {text: "Simple", href: "examples/Browser-Simple/index.html"},
-        {text: "Basic Application", href: "examples/Browser-BasicApp/index.html"}
+        {text: "Basic Application", href: "examples/Browser-BasicApp/index.html"},
+        {text: "Async Test", href: "examples/Browser-AsyncTest/index.html"}
     ],
     examplesNode: [
         {text: "Basic Application", href: "examples/Node-BasicApp/index.html"}
