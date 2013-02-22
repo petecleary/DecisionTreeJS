@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DecisionTreeJS - Examples Browser Async Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Decision Tree is a untility module providing asynchronous control flow similar to a flowchart. It can be used within node.js and the browser.">
+    <meta name="author" content="Pete Cleary">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../../assets/css/site.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38592932-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <style>
+        .graph {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #aeaeae;
+    background-color: #eaeaea;
+    }
+    .bar {
+        width: 8px;
+        margin: 1px;
+        display: inline-block;
+        position: relative;
+        background-color: #aeaeae;
+        vertical-align: baseline;
+    }
+    </style>
+</head>
+<body data-spy="scroll" data-target=".sidebar">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                    </span>
+                </button>
+                <a class="brand" href="../../index.html">DecisionTreeJS</a>
+                <div class="nav-collapse collapse">
+                    <ul id="topNav" class="nav">
+                    </ul>
+                    <p class="navbar-text pull-right">
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=node.js-basic-stack&type=watch&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=petecleary&repo=decisiontreejs&type=fork&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="60px" height="20px">
+                        </iframe>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="headSpace">
+    </div>
+    <div class="container">
+        <!-- Docs nav
+    ================================================== -->
+        <div class="row">
+            <div class="span3 sidebar">
+                <ul class="nav nav-list affix">
+                    <li><a href="#"><i class="icon-chevron-right"></i>Browser Examples</a>
+                        <ul id="exampleNavBrowser" class="nav nav-list">
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="icon-chevron-right"></i>Node.js Examples</a>
+                        <ul id="exampleNavNode" class="nav nav-list">
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="span9">
+                <section id="Examples">
+                <h1>
+                    Async Test <em><small>[Browser]</small></em></h1>
+    <p>This example is a test running <a href="https://github.com/caolan/async" target="_blank">Async</a> vs Decision Tree.</p>
+                    <p>We are going to call a decision tree that loops on itself until data.a > <input type="text" value="1000" style="width: 50px;" id="val" /> whilst we are going to add an equal number of functions to async!</p>
+                    
+                    
+    <script src="async.js"></script>
+    <script src="../../assets/decisiontree.min.js"></script>
+    <script src="app.js"></script>
+    <script src="json.js"></script>
+    <script type="text/javascript">
+
+        //add a log function to show on screen
+        TestApp.log = function (msg) {
+            document.getElementById("results").innerHTML += msg + "<br />";
+        }
+
+        //create a data object to process
+        var data = { "a": 1 };
+
+        var loopVal = 1000;
+
+        function runTest() {
+            //clear the results log
+            document.getElementById("results").innerHTML = "";
+            //show tab
+            $('#myTab a[href="#resultsTab"]').tab('show');
+
+            var v = Number(document.getElementById("val").value);
+            if (!isNaN(v)) {
+                loopVal = v;
+            }
+            //call async test first
+            runAsync();
+        }
+
+        function runDecisionTree() {
+            data.a = 1;
+            TestApp.log("Starting Decision Tree Test");
+            TestApp.log("data.a=" + data.a);
+            //set start date on the object
+            data.startDate = new Date();
+            //execute the tree on the root shape
+            decisionTree.execute(shape, data, TestApp.complete);
+        }
+
+        var asyncAddFunction = function (callback) {
+            data.a += 1;
+            //TestApp.log("data.a=" + data.a);
+            callback(null, data);
+        }
+
+        function runAsync() {
+            //reset data
+            data.a = 1;
+            TestApp.log("Starting Async Test");
+            TestApp.log("data.a=" + data.a);
+            //set start date on the object
+            data.startDate = new Date();
+            //loop for 1000 times to add the async function
+            var seriesFunc = new Array();
+            for (var x = 1; x < loopVal; x++) {
+                seriesFunc.push(asyncAddFunction);
+            }
+            async.series(seriesFunc,
+            // optional callback
+            function (err, results) {
+                TestApp.log("result: " + data.a);
+                TestApp.log("processing time: " + (new Date() - data.startDate) + " milliseconds");
+                runDecisionTree();
+            });
+        }
+    </script>
+                    <p>
+                 
+                <input type="button" class="btn btn-primary" onclick="runTest();" value="Run Test" />
+                <a class="btn btn-success" href="../Browser-BasicApp.zip" target="_blank" onclick="_gaq.push(['_trackEvent', 'Example actions', 'Example links', 'Browser-BasicApp']);">
+                    Download &raquo;</a>
+                        </p>
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
+              <li><a href="#pageCode" data-toggle="tab">Page Code</a></li>
+              <li><a href="#appJS" data-toggle="tab">App.js</a></li>
+              <li><a href="#json" data-toggle="tab">Json.js</a></li>
+              <li><a href="#resultsTab" data-toggle="tab">Test Results</a></li>
+              </li>
+            </ul> 
+            <div id="myTabContent" class="tab-content">
+                <div id="overview" class="tab-pane fade in active">
+                <div  class="well">
+                    <h3>Async vs Decision Tree</h3>
+                    <p>The test results are pretty good, Async just pips Decision Tree.</p>
+                    <p>This was expected as Async is great for linear control flow and the serial function is simpler for this type of control flow than the whole functionality within the Decision Tree.</p>
+                    <p>Async is a swiss army knife and will give you more (about 20) functions to assist you, however this comes at a price of a 10kb minified file.</p>
+                    <p>Decision Tree is built for one purpose and will give you more control over your flow at only 3kb minified.</p>        
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th colspan="2" style="text-align:center;">Chrome</th>
+                                <th colspan="2" style="text-align:center;">FireFox</th>
+                                <th colspan="2" style="text-align:center;">IE 9</th>
+                            </tr>
+                            <tr>
+                                <th>Loop Count</th>
+                                <th>Async</th>
+                                <th>DT</th>
+                                <th>Async</th>
+                                <th>DT</th>
+                                <th>Async</th>
+                                <th>DT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>100</td>
+                                <td>497 ms</td>
+                                <td>503 ms</td>
+                                <td>405 ms</td>
+                                <td>428 ms</td>
+                                <td>464 ms</td>
+                                <td>450 ms</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>2,495 ms</td>
+                                <td>2,520 ms</td>
+                                <td>2,013 ms</td>
+                                <td>2,050 ms</td>
+                                <td>2,062 ms</td>
+                                <td>2,061 ms</td>
+                            </tr>
+                            <tr>
+                                <td>1,000</td>
+                                <td>5,027  ms</td>
+                                <td>5,008 ms</td>
+                                <td>4,040 ms</td>
+                                <td>4,085 ms</td>
+                                <td>4,072 ms</td>
+                                <td>4,184 ms</td>
+                            </tr>
+                            <tr>
+                                <td>5,000</td>
+                                <td>25,072 ms</td>
+                                <td>25,060 ms</td>
+                                <td>20,269 ms</td>
+                                <td>20,533 ms</td>
+                                <td>20,095 ms</td>
+                                <td>20,134 ms</td>
+                            </tr>
+                            <tr>
+                                <td>10,000</td>
+                                <td>50,084 ms</td>
+                                <td>50,071 ms</td>
+                                <td>40,824 ms</td>
+                                <td>40,862 ms</td>
+                                <td>40,000 ms</td>
+                                <td>40,141 ms</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                                
+                    <p><small>Tested using Chrome v24.0.1312.57, FireFox 19.0 and IE 9.0.8112.16421 on laptop running 64 bit Windows 7 pro, 2.8GHz i7, 8GB RAM</small></p>
+                </div>
+                    </div>
+              <div class="tab-pane fade" id="pageCode">
+                <pre><code class="lang-javascript">
+    &lt;script src="async.js"&gt;&lt;/script&gt;
+    &lt;script src="decisiontree.min.js"&gt;&lt;/script&gt;
+    &lt;script src="app.js"&gt;&lt;/script&gt;
+    &lt;script src="json.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript"&gt;        
+                    
+
+        //add a log function to show on screen
+        TestApp.log = function (msg) {
+            document.getElementById("results").innerHTML += msg + "<br />";
+        }
+
+        //create a data object to process
+        var data = { "a": 1 };
+
+        var loopVal = 1000;
+
+        function runTest() {
+            //clear the results log
+            document.getElementById("results").innerHTML = "";
+            //show tab
+            $('#myTab a[href="#resultsTab"]').tab('show');
+
+            var v = Number(document.getElementById("val").value);
+            if (!isNaN(v)) {
+                loopVal = v;
+            }
+            //call async test first
+            runAsync();
+        }
+
+        function runDecisionTree() {
+            data.a = 1;
+            TestApp.log("Starting Decision Tree Test");
+            TestApp.log("data.a=" + data.a);
+            //set start date on the object
+            data.startDate = new Date();
+            //execute the tree on the root shape
+            decisionTree.execute(shape, data, TestApp.complete);
+        }
+
+        var asyncAddFunction = function (callback) {
+            data.a += 1;
+            //TestApp.log("data.a=" + data.a);
+            callback(null, data);
+        }
+
+        function runAsync() {
+            //reset data
+            data.a = 1;
+            TestApp.log("Starting Async Test");
+            TestApp.log("data.a=" + data.a);
+            //set start date on the object
+            data.startDate = new Date();
+            //loop for 1000 times to add the async function
+            var seriesFunc = new Array();
+            for (var x = 1; x < loopVal; x++) {
+                seriesFunc.push(asyncAddFunction);
+            }
+            async.series(seriesFunc,
+            // optional callback
+            function (err, results) {
+                TestApp.log("result: " + data.a);
+                TestApp.log("processing time: " + (new Date() - data.startDate) + " milliseconds");
+                runDecisionTree();
+            });
+        }
+    &lt;/script&gt;
+    &lt;input type="button" class="btn btn-primary" onclick="runTest();" value="Run Test" /&gt;
+    &lt;h2&gt;Results&lt;/h2&gt;
+    &lt;div id="results"&gt;&lt;/div&gt;
+                    </code>
+                </pre>
+                </div>
+              <div class="tab-pane fade" id="appJS">
+                <pre><code class="lang-javascript">var TestApp;
+(function (TestApp) {
+    //logs messages to the console
+    TestApp.log = function (message) {
+        console.log(message);
+    };
+    //add function
+    function add(data, shape, callback) {
+        try {
+            var v = Number(shape.properties.value);
+            if(isNaN(v)) {
+                throw new Error("'" + v + "' is not a number");
+            }
+            data.a += shape.properties.value;
+            callback(null, shape);
+        } catch (e) {
+            callback(e, shape);
+        }
+    }
+    TestApp.add = add;
+    //check value function
+    function checkValue(data, shape, callback) {
+        try  {
+            if(data.a < loopVal) {
+                shape.paths[0].selected = true;
+                shape.paths[1].selected = false;
+            } else {
+                shape.paths[0].selected = false;
+                shape.paths[1].selected = true;
+            }
+            callback(null, shape);
+        } catch (e) {
+            callback(e, shape);
+        }
+    }
+    TestApp.checkValue = checkValue;
+    //complete function
+    function complete(err, result, processedShapes) {
+        TestApp.log("result: " + result.a);
+        TestApp.log("processing time: " + (new Date() - result.startDate) + " milliseconds");
+    }
+    TestApp.complete = complete;
+})(TestApp || (TestApp = {}));
+
+                    </code>
+                </pre>
+                </div>
+              <div class="tab-pane fade" id="json">
+                <pre><code class="lang-javascript">var shape = {
+    "shapeType": "Entry",
+    "id": 1,
+    "description": "Start",
+    "nextShape": {
+        "shapeType": "Operation",
+        "id": 2,
+        "description": "Adding value 2",
+        "nextShape": {
+            "shapeType": "Decision",
+            "id": 3,
+            "description": "Adding value 2",
+            "paths": [{
+                "value": true,
+                "selected": false,
+                "nextShape": null,
+                "nextShapeId": 3
+            },
+            {
+                "value": false,
+                "selected": false,
+                "nextShape":
+                    {
+                        "shapeType": "Operation",
+                        "id": 5,
+                        "description": "Adding nothing",
+                        "nextShape": null,
+                        "properties": { "value": 0 },
+                        "processName": "TestApp.add"
+                    },
+                "nextShapeId": 0
+            }],
+            "properties": { "value": 2, "decision": 10 },
+            "processName": "TestApp.add",
+            "nextShape": null,
+            "decideName": "TestApp.checkValue"
+        },
+        "properties": { "value": 2 },
+        "processName": "TestApp.add"
+    }
+};
+                    </code>
+                </pre>
+                </div>
+
+                <div class="tab-pane fade"  id="resultsTab">
+                <div id="results" class="well">
+                    <p>You haven't run the test yet!</p>
+                    <p><input type="button" class="btn btn-primary" onclick="runTest();" value="Run Test" /></p>
+                </div>
+                </div>
+            </div>
+
+                </section>
+            </div>
+        </div>
+        <footer class="well">
+        <ul class="footer-links">
+          <li>
+            <a href="https://github.com/petecleary/decisiontreejs" target="_blank" onclick="_gaq.push(['_trackEvent', 'Footer actions', 'Footer links', 'GitHub project']);">GitHub project</a>
+          </li>
+        </ul>
+        <ul class="footer-links">
+            <li>&copy; 2013 Pete Cleary</li>
+        </ul>
+      </footer>
+    </div>
+    <script src="../../assets/js/jquery.js"></script>
+    <script src="../../assets/js/navigation.js"></script>
+    <script src="../../assets/js/application.js"></script>
+    <script src="../../assets/js/bootstrap-transition.js"></script>
+    <script src="../../assets/js/bootstrap-collapse.js"></script>
+    <script src="../../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../../assets/js/bootstrap-tab.js"></script>
+    <script type="text/javascript">
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    </script>
+</body>
+</html>
