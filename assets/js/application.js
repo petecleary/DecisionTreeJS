@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var root = (document.location.origin !== undefined) ? document.location.origin + '/' : 'http://petecleary.github.com/DecisionTreeJS/';
+    var root = (location.href.toLowerCase().indexOf("localhost") !== -1 && document.location.origin !== undefined) ? document.location.origin + '/' : 'http://petecleary.github.com/DecisionTreeJS/';
     //build top nav
     for (var x = 0; x < navigation.top.length; x++) {
         var c = (location.href.toLowerCase().indexOf((root + navigation.top[x].href).toLowerCase()) !== -1) ? "active" : "";
