@@ -1,6 +1,6 @@
 ﻿var TestApp = require("./app.js");
 var tree = require("./json.js");
-var decisionTree = require("../../lib/decisionTree.js");
+var decisionTree = require("../../lib/decisiontree.min.js");
 
 //create a data object to process
 var data = { "a": 1 };

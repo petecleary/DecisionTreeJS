@@ -17,13 +17,13 @@
             "type" : "MIT",
             "url" : "http://github.com/petecleary/decisiontreeJS/raw/master/LICENSE"
         }
-    ],
-    "jam": {
-        "main": "lib/decisiontree.js",
-        "include": [
-            "lib/decisiontree.js",
-            "README.md",
-            "LICENSE"
-        ]
+    ]
+    , "devDependencies": {
+        "grunt": "latest"
+        ,"grunt-exec": "latest"
+        ,"grunt-contrib-uglify": "latest"
+    }
+    , "scripts": {
+        "grunt": "node node_modules\\.bin\\grunt"
     }
 }
